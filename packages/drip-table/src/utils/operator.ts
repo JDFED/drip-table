@@ -81,3 +81,23 @@ export const stringify = (v: unknown) => {
   }
   return String(v);
 };
+
+/**
+ * 格式化数字数据类型
+ * @param value 原始数据
+ * @param defaultValue 兜底数据
+ * @returns 数字
+ */
+export const parseNumber = (value: string | number | undefined, defaultValue: number = 0): number => {
+  if (typeof value === 'number') {
+    return value;
+  }
+  if (typeof value === 'string') {
+    const n = Number.parseFloat(value);
+    if (Number.isNaN(n)) {
+      return defaultValue;
+    }
+    return n;
+  }
+  return defaultValue;
+};

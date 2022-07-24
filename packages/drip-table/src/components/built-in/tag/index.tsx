@@ -9,7 +9,7 @@
 import React from 'react';
 
 import { DripTableColumnSchema, DripTableRecordTypeBase, SchemaObject } from '@/types';
-import { indexValue } from '@/drip-table/utils';
+import { indexValue } from '@/utils/operator';
 
 import { DripTableComponentProps } from '../component';
 

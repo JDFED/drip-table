@@ -1,0 +1,346 @@
+/**
+ * This file is part of the drip-table project.
+ * @link     : https://drip-table.jd.com/
+ * @author   : Emil Zhai (root@derzh.com)
+ * @modifier : Emil Zhai (root@derzh.com)
+ * @copyright: Copyright (c) 2021 JD Network Technology Co., Ltd.
+ */
+
+@prefixCls: jfe-drip-table;
+
+.@{prefixCls} {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #000000d9;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: "tnum", "tnum";
+  position: relative;
+  font-size: 14px;
+  background: #ffffff;
+  border-radius: 2px;
+
+  &-thead > tr > th {
+    position: relative;
+    color: #000000d9;
+    font-weight: 500;
+    text-align: left;
+    background: #fafafa;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background .3s ease;
+  }
+
+  &-tbody > tr > td,
+  &-virtual-cell {
+    border-bottom: 1px solid #f0f0f0;
+    transition: background .3s;
+  }
+
+  & table {
+    width: 100%;
+    text-align: left;
+    border-radius: 2px 2px 0 0;
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+
+  &-tbody > tr > td,
+  &-thead > tr > th,
+  & tfoot > tr > td,
+  & tfoot > tr > th,
+  & .@{prefixCls}-virtual-cell {
+    position: relative;
+    padding: 16px;
+    overflow-wrap: break-word;
+  }
+
+  &-tbody > tr.@{prefixCls}-row:hover > td,
+  &-tbody > tr > td.@{prefixCls}-cell-row-hover {
+    background: #fafafa;
+  }
+
+  &-tbody > tr.@{prefixCls}-row-selected > td {
+    background: #e6f7ff;
+    border-color: #00000008;
+  }
+
+  &-tbody > tr.@{prefixCls}-row-selected:hover > td {
+    background: #dcf4ff;
+  }
+
+  &-footer {
+    padding: 16px;
+    color: #000000d9;
+    background: #fafafa;
+    border-radius: 0 0 2px 2px;
+  }
+
+  // ====================================
+  // ==           Expandable           ==
+  // ====================================
+  &-expand-icon-col {
+    width: 48px;
+  }
+
+  &-row-expand-icon-cell {
+    text-align: center;
+  }
+
+  &-row-indent {
+    float: left;
+    height: 1px;
+  }
+
+  &-row-expand-icon-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-row-expand-icon {
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    float: left;
+    box-sizing: border-box;
+    width: 17px;
+    height: 17px;
+    padding: 0;
+    color: inherit;
+    line-height: 17px;
+    background: #ffffff;
+    border: 1px solid #f0f0f0;
+    border-radius: 2px;
+    outline: none;
+    transform: scale(.9412);
+    transition: all .3s;
+    user-select: none;
+  }
+
+  &-row-expand-icon:focus,
+  &-row-expand-icon:hover {
+    color: #40a9ff;
+  }
+
+  &-row-expand-icon:active {
+    color: #096dd9;
+  }
+
+  &-row-expand-icon:active,
+  &-row-expand-icon:focus,
+  &-row-expand-icon:hover {
+    border-color: currentColor;
+  }
+
+  &-row-expand-icon::after,
+  &-row-expand-icon::before {
+    position: absolute;
+    background: currentColor;
+    transition: transform .3s ease-out;
+    content: "";
+  }
+
+  &-row-expand-icon::before {
+    top: 7px;
+    right: 3px;
+    left: 3px;
+    height: 1px;
+  }
+
+  &-row-expand-icon::after {
+    top: 3px;
+    bottom: 3px;
+    left: 7px;
+    width: 1px;
+    transform: rotate(90deg);
+  }
+
+  &-row-expand-icon-collapsed::before {
+    transform: rotate(-180deg);
+  }
+
+  &-row-expand-icon-collapsed::after {
+    transform: rotate(0deg);
+  }
+
+  &-row-expand-icon-spaced {
+    background: transparent;
+    border: 0;
+    visibility: hidden;
+  }
+
+  &-row-expand-icon-spaced::after,
+  &-row-expand-icon-spaced::before {
+    display: none;
+    content: none;
+  }
+
+  tr&-expanded-row:hover > td,
+  tr&-expanded-row > td {
+    background: #fbfbfb;
+  }
+
+  // ====================================
+  // ==             Border             ==
+  // ====================================
+  &&--bordered {
+    border-left: 1px solid #f0f0f0;
+
+    & > .@{prefixCls}-container > .@{prefixCls}-body > table > tbody > tr > td,
+    & > .@{prefixCls}-container > .@{prefixCls}-body > table > tfoot > tr > td,
+    & > .@{prefixCls}-container > .@{prefixCls}-body > table > tfoot > tr > th,
+    & > .@{prefixCls}-container > .@{prefixCls}-body > table > thead > tr > th,
+    & > .@{prefixCls}-container > .@{prefixCls}-content > table > tbody > tr > td,
+    & > .@{prefixCls}-container > .@{prefixCls}-content > table > tfoot > tr > td,
+    & > .@{prefixCls}-container > .@{prefixCls}-content > table > tfoot > tr > th,
+    & > .@{prefixCls}-container > .@{prefixCls}-content > table > thead > tr > th,
+    & > .@{prefixCls}-container > .@{prefixCls}-header > table > tbody > tr > td,
+    & > .@{prefixCls}-container > .@{prefixCls}-header > table > tfoot > tr > td,
+    & > .@{prefixCls}-container > .@{prefixCls}-header > table > tfoot > tr > th,
+    & > .@{prefixCls}-container > .@{prefixCls}-header > table > thead > tr > th,
+    & > .@{prefixCls}-container > .@{prefixCls}-summary > table > tbody > tr > td,
+    & > .@{prefixCls}-container > .@{prefixCls}-summary > table > tfoot > tr > td,
+    & > .@{prefixCls}-container > .@{prefixCls}-summary > table > tfoot > tr > th,
+    & > .@{prefixCls}-container > .@{prefixCls}-summary > table > thead > tr > th,
+    & > .@{prefixCls}-container > .@{prefixCls}-virtual-list > .@{prefixCls}-virtual-cell {
+      border-right: 1px solid #f0f0f0;
+    }
+
+    & > .@{prefixCls}-container > .@{prefixCls}-content > table,
+    & > .@{prefixCls}-container > .@{prefixCls}-header > table {
+      border-top: 1px solid #f0f0f0;
+    }
+
+    & > .@{prefixCls}-footer {
+      border: 1px solid #f0f0f0;
+      border-top: 0;
+    }
+  }
+
+  // ====================================
+  // ==             Fixed              ==
+  // ====================================
+
+  &-cell-fix-left,
+  &-cell-fix-right {
+    position: sticky !important;
+    z-index: 2;
+    background: #ffffff;
+  }
+
+  &-cell-fix-left-first::after,
+  &-cell-fix-left-last::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: -1px;
+    width: 30px;
+    transform: translateX(100%);
+    transition: box-shadow .3s;
+    content: "";
+    pointer-events: none;
+  }
+
+  &-cell-fix-right-first::after,
+  &-cell-fix-right-last::after {
+    position: absolute;
+    top: 0;
+    bottom: -1px;
+    left: 0;
+    width: 30px;
+    transform: translateX(-100%);
+    transition: box-shadow .3s;
+    content: "";
+    pointer-events: none;
+  }
+
+  & &-container::after,
+  & &-container::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    width: 30px;
+    transition: box-shadow .3s;
+    content: "";
+    pointer-events: none;
+  }
+
+  & &-container::before {
+    left: 0;
+  }
+
+  & &-container::after {
+    right: 0;
+  }
+
+  &-ping-left:not(&-has-fix-left) &-container {
+    position: relative;
+  }
+
+  &-ping-left:not(&-has-fix-left) &-container::before {
+    box-shadow: inset 10px 0 8px -8px #00000026;
+  }
+
+  &-ping-left &-cell-fix-left-first::after,
+  &-ping-left &-cell-fix-left-last::after {
+    box-shadow: inset 10px 0 8px -8px #00000026;
+  }
+
+  &-ping-left &-cell-fix-left-last::before {
+    background-color: transparent !important;
+  }
+
+  &-ping-right:not(&-has-fix-right) &-container {
+    position: relative;
+  }
+
+  &-ping-right:not(&-has-fix-right) &-container::after {
+    box-shadow: inset -10px 0 8px -8px #00000026;
+  }
+
+  &-ping-right &-cell-fix-right-first::after,
+  &-ping-right &-cell-fix-right-last::after {
+    box-shadow: inset -10px 0 8px -8px #00000026;
+  }
+
+  // ====================================
+  // ==              Size              ==
+  // ====================================
+  &&-small &-footer,
+  &&-small &-tbody > tr > td,
+  &&-small &-thead > tr > th,
+  &&-small &-title,
+  &&-small tfoot > tr > td,
+  &&-small tfoot > tr > th,
+  &&-small .@{prefixCls}-virtual-cell {
+    padding: 8px;
+  }
+
+  &&-middle &-footer,
+  &&-middle &-tbody > tr > td,
+  &&-middle &-thead > tr > th,
+  &&-middle &-title,
+  &&-middle tfoot > tr > td,
+  &&-middle tfoot > tr > th,
+  &&-middle .@{prefixCls}-virtual-cell {
+    padding: 12px 8px;
+  }
+}
+
+.column-title__question-icon {
+  display: inline-block;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -.125em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}

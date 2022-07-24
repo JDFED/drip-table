@@ -6,11 +6,14 @@
  * @copyright: Copyright (c) 2021 JD Network Technology Co., Ltd.
  */
 
-import React from 'react';
+import type { SchemaObject } from 'ajv';
+import type React from 'react';
 
-import { type DripTableGenericRenderElement } from '@/components/generic-render';
+import type { AjvOptions } from '@/utils/ajv';
+import type { DripTableBuiltInColumnSchema, DripTableBuiltInComponentEvent, DripTableComponentProps } from '@/components/built-in';
+import type { DripTableGenericRenderElement } from '@/components/generic-render';
 
-import { type DripTableBuiltInColumnSchema } from '../drip-table/components';
+import type { DripTableDriver } from './driver';
 
 export { SchemaObject } from 'ajv';
 
@@ -150,7 +153,7 @@ export interface DripTableSchema<
   pagination?: false | {
     size?: 'small' | 'default';
     pageSize: number;
-    position?: 'bottomLeft' | 'bottomCenter' | 'bottomRight';
+    position?: 'topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight';
     showTotal?: boolean | string;
     total?: number;
     showLessItems?: boolean;
@@ -187,6 +190,10 @@ export interface DripTableSchema<
    * 是否开启虚拟滚动
    */
   virtual?: boolean;
+  /**
+   * 行高，用于虚拟滚动渲染
+   */
+  rowHeight?: number;
   /**
    * 虚拟列表滚动高度
    * @deprecated 请使用 scroll.y
@@ -267,6 +274,278 @@ export interface DripTablePagination {
 export type DripTableFilters = Record<string, (React.Key | boolean)[] | null>;
 
 export type { DripTableDriver, DripTableReactComponent, DripTableReactComponentProps } from './driver';
+
+/**
+ * 指定子表格的参数
+ */
+export interface DripTableSubtableProps {
+  /**
+   * 数据源总条数
+   */
+  total?: number;
+  /**
+   * 指定表是否默认展开所有子表
+   */
+  defaultExpandAllRows?: boolean;
+  /**
+   * 指定表默认展开子表键列表
+   */
+  defaultExpandedRowKeys?: React.Key[];
+}
+
+/**
+ * 表格组件属性
+ */
+export interface DripTableProps<
+  RecordType extends DripTableRecordTypeWithSubtable<DripTableRecordTypeBase, NonNullable<ExtraOptions['SubtableDataSourceKey']>>,
+  ExtraOptions extends Partial<DripTableExtraOptions> = never,
+> extends DripTableSubtableProps {
+  /**
+   * 底层组件驱动
+   */
+  driver: DripTableDriver;
+  /**
+   * 样式表类名
+   */
+  className?: string;
+  /**
+   * 自定义样式表
+   */
+  style?: React.CSSProperties;
+  /**
+   * 表单 Schema
+   */
+  schema: DripTableSchema<NonNullable<ExtraOptions['CustomColumnSchema']>, NonNullable<ExtraOptions['SubtableDataSourceKey']>>;
+  /**
+   * 数据源
+   */
+  dataSource: RecordType[];
+  /**
+   * 当前选中的行键
+   */
+  selectedRowKeys?: React.Key[];
+  /**
+   * 当前显示的列键
+   */
+  displayColumnKeys?: React.Key[];
+  /**
+   * 当前页码
+   */
+  currentPage?: number;
+  /**
+   * 加载中
+   */
+  loading?: boolean;
+  /**
+   * 冻结表头和滚动条设置项
+   */
+  sticky?: {
+    offsetHeader?: number;
+    offsetScroll?: number;
+    getContainer?: () => HTMLElement;
+  };
+  /**
+   * 子表参数匹配设置，可用于覆盖父表参数透传
+   */
+  subtableProps?: {
+    /**
+     * 根据子表 id 进行匹配
+     */
+    subtableID?: DripTableID;
+    /**
+     * 根据子表所在行 KEY 匹配
+     */
+    recordKeys?: unknown[];
+    /**
+     * 默认兜底设置
+     */
+    default?: boolean;
+    /**
+     * 子表参数
+     */
+    properties: DripTableSubtableProps;
+  }[];
+  /**
+   * 表格单元格组件库
+   */
+  components?: {
+    [libName: string]: {
+      [componentName: string]:
+      React.JSXElementConstructor<
+      DripTableComponentProps<
+      RecordType,
+      NonNullable<ExtraOptions['CustomColumnSchema']>,
+      NonNullable<ExtraOptions['CustomComponentEvent']>,
+      NonNullable<ExtraOptions['CustomComponentExtraData']>
+      >
+      > & { schema?: SchemaObject };
+    };
+  };
+  /**
+   * 组件插槽，可通过 Schema 控制自定义区域渲染
+   */
+  slots?: {
+    [componentType: string]: React.JSXElementConstructor<{
+      style?: React.CSSProperties;
+      className?: string;
+      slotType: string;
+      driver: DripTableDriver;
+      schema: DripTableSchema<NonNullable<ExtraOptions['CustomColumnSchema']>, NonNullable<ExtraOptions['SubtableDataSourceKey']>>;
+      dataSource: readonly RecordType[];
+      onSearch: (searchParams: Record<string, unknown>) => void;
+    }>;
+  };
+  /**
+   * Schema 校验配置项
+   */
+  ajv?: AjvOptions | false;
+  /**
+   * 自定义组件附加透传数据
+   */
+  ext?: NonNullable<ExtraOptions['CustomComponentExtraData']>;
+  /**
+   * 顶部自定义渲染函数
+   */
+  title?: (data: readonly RecordType[]) => React.ReactNode;
+  /**
+   * 底部自定义渲染函数
+   */
+  footer?: (data: readonly RecordType[]) => React.ReactNode;
+  /**
+   * 子表顶部自定义渲染函数
+   */
+  subtableTitle?: (
+    record: RecordType,
+    recordIndex: number,
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => React.ReactNode;
+  /**
+   * 子表底部自定义渲染函数
+   */
+  subtableFooter?: (
+    record: RecordType,
+    recordIndex: number,
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => React.ReactNode;
+  /**
+   * 获取指定行是否可展开
+   */
+  rowExpandable?: (
+    record: RecordType,
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => boolean;
+  /**
+   * 行展开自定义渲染函数
+   */
+  expandedRowRender?: (
+    record: RecordType,
+    index: number,
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => React.ReactNode;
+  /**
+   * 生命周期：组件加载完成
+   */
+  componentDidMount?: (tableInfo: DripTableTableInformation<RecordType, ExtraOptions>) => void;
+  /**
+   * 生命周期：组件更新完成
+   */
+  componentDidUpdate?: (tableInfo: DripTableTableInformation<RecordType, ExtraOptions>) => void;
+  /**
+   * 生命周期：组件即将卸载
+   */
+  componentWillUnmount?: (tableInfo: DripTableTableInformation<RecordType, ExtraOptions>) => void;
+  /**
+   * 点击行
+   */
+  onRowClick?: (
+    record: RecordType | RecordType[],
+    index: number | string | (number | string)[],
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => void;
+  /**
+   * 双击行
+   */
+  onRowDoubleClick?: (
+    record: RecordType | RecordType[],
+    index: number | string | (number | string)[],
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => void;
+  /**
+   * 选择行变化
+   */
+  onSelectionChange?: (
+    selectedKeys: React.Key[],
+    selectedRows: RecordType[],
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => void;
+  /**
+   * 搜索触发
+   */
+  onSearch?: (
+    searchParams: { searchKey?: number | string; searchStr: string } | Record<string, unknown>,
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => void;
+  /**
+   * 点击添加按钮触发
+   */
+  onInsertButtonClick?: (
+    event: React.MouseEvent<HTMLElement, MouseEvent>,
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => void;
+  /**
+   * 过滤器触发
+   */
+  onFilterChange?: (
+    filters: DripTableFilters,
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => void;
+  /**
+   * 页码/页大小变化
+   */
+  onPageChange?: (
+    currentPage: number,
+    pageSize: number,
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => void;
+  /**
+   * 过滤器、分页器 等配置变化
+   */
+  onChange?: (
+    options: {
+      pagination: DripTablePagination;
+      filters: DripTableFilters;
+    },
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => void;
+  /**
+   * 数据源编辑变化事件
+   */
+  onDataSourceChange?: (
+    dataSource: RecordType[],
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => void;
+  /**
+   * 用户修改展示的列时
+   */
+  onDisplayColumnKeysChange?: (
+    displayColumnKeys: React.Key[],
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => void;
+  /**
+   * 通用事件机制
+   */
+  onEvent?: (
+    event: DripTableBuiltInComponentEvent | NonNullable<ExtraOptions['CustomComponentEvent']>,
+    record: RecordType,
+    index: number,
+    tableInfo: DripTableTableInformation<RecordType, ExtraOptions>,
+  ) => void;
+  /**
+   * 渲染子表时用于透传父级信息，仅限内部使用
+   * @internal
+   */
+  __PARENT_INFO__?: DripTableTableInformation<RecordType, ExtraOptions>;
+}
 
 export type EventLike<T = { type: string }> = T extends { type: string } ? T : never;
 export interface DripTableCustomEvent<TN> extends EventLike<{ type: 'custom' }> { name: TN }

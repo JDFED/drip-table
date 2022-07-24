@@ -148,7 +148,7 @@ const Demo = () => {
         }, [])}
         onFilterChange={React.useMemo(() => (...args) => { console.log('onFilterChange', ...args); }, [])}
         onPageChange={React.useMemo(() => (...args) => { console.log('onPageChange', ...args); }, [])}
-        onChange={React.useMemo(() => (nextPagination, nextFilters) => {
+        onChange={React.useMemo(() => ({ pagination: nextPagination, filters: nextFilters }) => {
           console.log('onChange', nextPagination, nextFilters);
           fetchPageData(nextFilters, nextPagination.pageSize ?? pageSize, nextPagination.current ?? pageNum);
         }, [])}
