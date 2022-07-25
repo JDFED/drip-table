@@ -376,7 +376,6 @@ ExtraOptions extends Partial<DripTableExtraOptions> = never,
                   >
                     {
                     ({ columnIndex, rowIndex, style }) => {
-                      const schema = tableInfo.schema.columns[columnIndex];
                       const column = columns[columnIndex];
                       const record = dataSource[rowIndex];
                       return (
@@ -384,7 +383,7 @@ ExtraOptions extends Partial<DripTableExtraOptions> = never,
                           className={classNames(styles['jfe-drip-table-virtual-cell'])}
                           style={style}
                         >
-                          { column.render?.(indexValue(record, schema.dataIndex), record, rowIndex) }
+                          { column.render?.(indexValue(record, column.dataIndex), record, rowIndex) }
                         </div>
                       );
                     }

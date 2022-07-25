@@ -13,7 +13,7 @@
  * @param defaultValue 默认值
  * @returns 值
  */
-export const indexValue = (data: unknown, indexes: string | string[], defaultValue: unknown = void 0) => {
+export const indexValue = (data: unknown, indexes: string | number | readonly (string | number)[] | undefined, defaultValue: unknown = void 0) => {
   if (typeof data !== 'object' || !data) {
     return defaultValue;
   }
