@@ -13690,7 +13690,7 @@ rc-cascader@~3.0.0-alpha.3:
     rc-tree "~5.3.4"
     rc-util "^5.6.1"
 
-rc-checkbox@~2.3.0:
+rc-checkbox@^2.3.2, rc-checkbox@~2.3.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/rc-checkbox/-/rc-checkbox-2.3.2.tgz#f91b3678c7edb2baa8121c9483c664fa6f0aefc1"
   integrity sha512-afVi1FYiGv1U0JlpNH/UaEXdh6WUJjcWokj/nUN2TgG80bfG+MDdbfHKlLcNNba94mbjy2/SXJ1HDgrOkXGAjg==

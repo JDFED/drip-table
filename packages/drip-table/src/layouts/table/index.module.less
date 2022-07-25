@@ -78,6 +78,28 @@
   }
 
   // ====================================
+  // ==             Column             ==
+  // ====================================
+
+  &-column-title__question-icon {
+    display: inline-block;
+    color: inherit;
+    font-style: normal;
+    line-height: 0;
+    text-align: center;
+    text-transform: none;
+    vertical-align: -.125em;
+    text-rendering: optimizelegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  &-column-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  // ====================================
   // ==           Expandable           ==
   // ====================================
   &-expand-icon-col {
@@ -331,16 +353,4 @@
   &&-middle .@{prefixCls}-virtual-cell {
     padding: 12px 8px;
   }
-}
-
-.column-title__question-icon {
-  display: inline-block;
-  color: inherit;
-  font-style: normal;
-  line-height: 0;
-  text-align: center;
-  text-transform: none;
-  vertical-align: -.125em;
-  text-rendering: optimizelegibility;
-  -webkit-font-smoothing: antialiased;
 }
