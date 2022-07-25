@@ -4,8 +4,7 @@ import { VariableSizeGrid } from 'react-window';
 
 import { DripTableDriver, DripTableRecordTypeBase } from '@/types';
 import { DripTableDriverTableProps } from '@/types/driver/table';
-
-import { indexValue } from '../utils';
+import { indexValue } from '@/utils/operator';
 
 import styles from './index.module.css';
 

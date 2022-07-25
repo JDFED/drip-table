@@ -22,6 +22,7 @@ const schema = {
     y: 500,
   },
   pagination: false,
+  rowSelection: true,
   columns: [
     {
       key: "mock_1",

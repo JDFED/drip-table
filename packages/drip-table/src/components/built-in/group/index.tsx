@@ -7,14 +7,11 @@
  */
 import React from 'react';
 
-import {
-  type DripTableColumnSchema,
+import { type DripTableColumnSchema,
   type DripTableExtraOptions,
-  type DripTableRecordTypeBase,
+  type DripTableProps, type DripTableRecordTypeBase,
   type DripTableRecordTypeWithSubtable,
-  type SchemaObject,
-} from '@/types';
-import { DripTableProps } from '@/drip-table';
+  type SchemaObject } from '@/types';
 
 import DripTableBuiltInComponents, { DripTableBuiltInColumnSchema, DripTableBuiltInComponentEvent } from '..';
 import { DripTableComponentProps } from '../component';

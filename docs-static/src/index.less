@@ -6,15 +6,15 @@
  * @copyright: Copyright (c) 2021 JD Network Technology Co., Ltd.
  */
 
- @font-face {
-  font-family: 'CircularStd';
-  src: url(http://storage.360buyimg.com/drip-design/drip-table/circular-std.woff) format("woff");
+@font-face {
+  font-family: CircularStd;
+  src: url("//storage.360buyimg.com/drip-design/drip-table/circular-std.woff") format("woff");
   font-weight: 400;
 }
 
 @font-face {
-  font-family: 'CircularStd';
-  src: url(http://storage.360buyimg.com/drip-design/drip-table/circular-std-bold.woff) format("woff");
+  font-family: CircularStd;
+  src: url("//storage.360buyimg.com/drip-design/drip-table/circular-std-bold.woff") format("woff");
   font-weight: 700;
 }
 
@@ -32,10 +32,10 @@
   &-font-circular-std {
     font-family:
       CircularStd,
-      'PingFangSC-Regular',
-      'Microsoft YaHei',
-      'Open Sans',
-      'Helvetica Neue',
+      PingFangSC-Regular,
+      "Microsoft YaHei",
+      "Open Sans",
+      "Helvetica Neue",
       Helvetica,
       Arial,
       sans-serif;
@@ -73,7 +73,7 @@
   &-header-fixed {
     background-color: #ffffff;
     z-index: 100;
-    box-shadow: 0 10px 40px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 10px 40px 0 #0000001a;
     transform: translateY(-6rem);
     visibility: hidden;
     transition: all .3s ease;
@@ -126,7 +126,7 @@
     left: -20px;
     background-color: #ffffff;
     min-width: 90px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 #00000033;
     padding: 12px 16px;
   }
 
@@ -195,7 +195,7 @@
   &-screen-image {
     border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0 35px 60px 0 rgba(0, 0, 0, .1);
+    box-shadow: 0 35px 60px 0 #0000001a;
   }
 
   &-typewriter {
@@ -250,8 +250,8 @@
   &-demo-video {
     border-radius: 5px;
     box-shadow:
-      0 10px 16px 0 rgba(0, 0, 0, 20%),
-      0 6px 20px 0 rgba(0, 0, 0, 19%);
+      0 10px 16px 0 #00000033,
+      0 6px 20px 0 #00000030;
   }
 
   ///////////////
@@ -259,7 +259,7 @@
   ///////////////
 
   &-section3 {
-    background: url(https://img14.360buyimg.com/imagetools/jfs/t1/157058/33/24290/875166/61c2d220Ebd9b7ae1/27ec57ea3660e44f.png) no-repeat;
+    background: url("//img14.360buyimg.com/imagetools/jfs/t1/157058/33/24290/875166/61c2d220Ebd9b7ae1/27ec57ea3660e44f.png") no-repeat;
     background-size: cover;
     background-position: center;
     height: calc(100vh - 5rem);
@@ -276,7 +276,7 @@
     height: 100%;
     left: 0;
     top: 0;
-    background-color: rgba(0, 0, 0, .5);
+    background-color: #00000080;
     z-index: 0;
   }
 
@@ -379,7 +379,7 @@
 
   &-section7 {
     height: 90vh;
-    background: url(https://img11.360buyimg.com/imagetools/jfs/t1/139651/25/24394/459532/61c178d7Eb82f1631/2cfbc37a4a631fed.jpg) no-repeat;
+    background: url("//img11.360buyimg.com/imagetools/jfs/t1/139651/25/24394/459532/61c178d7Eb82f1631/2cfbc37a4a631fed.jpg") no-repeat;
     background-size: cover;
     background-position: center;
   }
@@ -434,11 +434,8 @@
 
   &-site-footer {
     color: #999999 !important;
-    padding-bottom: 2rem;
-    padding-top: 2rem;
     background-color: #101010;
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding: 2rem 3rem;
   }
 
   &-site-footer ul li {
@@ -494,7 +491,7 @@
   }
   @media screen and (max-width: 481px) {
     &-is-variable.is-6 {
-      --columnGap: 1rem !important;
+      --column-gap: 1rem !important;
     }
 
     &-section7 {

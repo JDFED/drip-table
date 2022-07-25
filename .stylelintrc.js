@@ -8,7 +8,8 @@
 
 module.exports = {
   extends: 'stylelint-config-standard',
-  plugins: [],
+  plugins: ['stylelint-less'],
+  ignoreDisables: true,
   rules: {
     'at-rule-empty-line-before': ['always', {
       except: ['inside-block', 'blockless-after-same-name-blockless', 'first-nested'],
@@ -20,13 +21,14 @@ module.exports = {
     'comment-empty-line-before': ['always', {
       ignore: ['after-comment', 'stylelint-commands'],
     }],
+    'max-line-length': 180,
     'max-nesting-depth': null,
     'no-empty-source': null,
     'no-descending-specificity': null,
     'number-leading-zero': 'never',
     'selector-class-pattern': [
       // Matches class name likes this: block__elem--mod or block1__elem1--mod1-block2__elem2--mod2- or block-50x50__50x50--50x50...
-      /^(?:(weui|ant|BraftEditor)-[a-zA-Z-_]+|(?:(?:(?:^|(?!^)-)[a-z]+\d*|-[a-z]*\d+|-\d+x\d+)(?:__[a-z]+\d*|__[a-z]*\d+|__\d+x\d+){0,1}(?:--[a-z]+\d*|--[a-z]*\d+|--\d+x\d+){0,1})*)$/u, {
+      /^(?:(weui|ant|__dumi|BraftEditor)-[a-zA-Z-_]+|(?:(?:(?:^|(?!^)-)[a-z]+\d*|-[a-z]*\d+|-\d+x\d+)(?:__[a-z]+\d*|__[a-z]*\d+|__\d+x\d+){0,1}(?:--[a-z]+\d*|--[a-z]*\d+|--\d+x\d+){0,1})*)$/u, {
         severity: 'error',
         resolveNestedSelectors: true,
         message: 'Selector should be written in BEM style (selector-class-pattern)',
@@ -39,6 +41,11 @@ module.exports = {
       ignorePseudoClasses: ['global'],
     }],
   },
-  ignoreDisables: true,
+  overrides: [
+    {
+      files: ['*.less', '**/*.less'],
+      customSyntax: 'postcss-less',
+    },
+  ],
   ignoreFiles: ['**/*.min.css'],
 };

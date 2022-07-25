@@ -6,18 +6,22 @@
  * @copyright: Copyright (c) 2020 JD Network Technology Co., Ltd.
  */
 
-import classnames from 'classnames';
+import classNames from 'classnames';
 import Textarea from 'rc-textarea';
 import React from 'react';
 
 import { DripTableColumnSchema, DripTableRecordTypeBase, SchemaObject } from '@/types';
-import { indexValue, stringify } from '@/drip-table/utils';
+import { indexValue, stringify } from '@/utils/operator';
 
 import { DripTableComponentProps } from '../component';
 
 import styles from './index.module.less';
 
 export type DTCTextColumnSchema = DripTableColumnSchema<'text', {
+  /**
+   * 组件类名
+   */
+  className?: string;
   /**
    * 字体大小
    */
@@ -27,12 +31,17 @@ export type DTCTextColumnSchema = DripTableColumnSchema<'text', {
    * {'single'}   单行文本；
    * {'multiple'} 多行文本；
    * {'custom'}   自定义文本；
+   * {'static'}   静态文本；
    */
-  mode?: 'single' | 'multiple' | 'custom';
+  mode?: 'single' | 'multiple' | 'custom' | 'static';
   /**
    * 自定义格式化字符串
    */
   format?: string;
+  /**
+   * 静态文本内容
+   */
+  static?: string;
   /**
    * 内容展示翻译文案
    */
@@ -106,6 +115,7 @@ export default class DTCText<RecordType extends DripTableRecordTypeBase> extends
       fontSize: { type: 'string' },
       mode: { enum: ['single', 'multiple', 'custom'] },
       format: { type: 'string' },
+      static: { type: 'string' },
       i18n: {},
       defaultValue: { type: 'string' },
       prefix: { type: 'string' },
@@ -162,6 +172,9 @@ export default class DTCText<RecordType extends DripTableRecordTypeBase> extends
       }
       return !!schema.dataIndex;
     }
+    if (options.mode === 'static') {
+      return typeof options.static === 'string';
+    }
     return false;
   }
 
@@ -179,14 +192,14 @@ export default class DTCText<RecordType extends DripTableRecordTypeBase> extends
 
   private get wrapperClassName(): string | null {
     const maxRow = this.props.schema.options.maxRow;
-    const classNames: string[] = [];
+    const wrapperClassName: string[] = [];
     if (this.props.schema.options.ellipsis) {
-      classNames.push(styles['text-ellipsis']);
+      wrapperClassName.push(styles['text-ellipsis']);
     }
     if (maxRow) {
-      classNames.push(styles['max-row']);
+      wrapperClassName.push(styles['max-row']);
     }
-    return classnames(classNames);
+    return classNames(wrapperClassName, this.props.schema.options.className);
   }
 
   private get rawTextStyles(): React.CSSProperties {
@@ -236,6 +249,9 @@ export default class DTCText<RecordType extends DripTableRecordTypeBase> extends
         .map((config, i) => `${config.prefix || ''}${translate(config.i18n, indexValue(data, config.dataIndex, defaultValue)) ?? ''}${config.suffix || ''}`)
         .join('\n')
         .split('\n');
+    }
+    if (mode === 'static') {
+      return (options.static || '').split('\n');
     }
     return [];
   }
@@ -305,7 +321,7 @@ export default class DTCText<RecordType extends DripTableRecordTypeBase> extends
       return <Alert message="未配置字段" showIcon type="error" />;
     }
     const rawTextEl: JSX.Element | JSX.Element[] = this.rawText.map((s, i) => <div key={i}>{ stringify(s) || (i === 0 ? '' : <br />) }</div>);
-    const wrapperEl = <div className={classnames(wrapperClassName, styles['word-break'])} style={wrapperStyles}>{ rawTextEl }</div>;
+    const wrapperEl = <div className={classNames(wrapperClassName, styles['word-break'])} style={wrapperStyles}>{ rawTextEl }</div>;
     if (this.props.schema.options.maxRow) {
       return (
         <div className={styles.main} onClick={this.onClick}>

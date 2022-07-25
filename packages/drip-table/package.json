@@ -1,6 +1,6 @@
 {
   "name": "drip-table",
-  "version": "1.5.2",
+  "version": "2.0.0-alpha.0",
   "description": "A tiny and powerful enterprise-class solution for building tables.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -30,8 +30,14 @@
     "classnames": "^2.3.1",
     "domhandler": "^4.3.0",
     "lodash": "^4.17.21",
+    "rc-checkbox": "^2.3.2",
+    "rc-pagination": "^3.1.17",
     "rc-resize-observer": "^1.0.1",
+    "rc-select": "^14.1.9",
+    "rc-table": "^7.25.2",
     "rc-textarea": "^0.3.7",
+    "rc-tooltip": "^5.2.2",
+    "rc-util": "^5.22.5",
     "react-dom": "^16.9.0",
     "react-window": "^1.8.6",
     "viewerjs": "1.7.1"
@@ -41,6 +47,7 @@
     "@types/react-window": "^1.8.5",
     "eslint-config-lvmcn": "^0.0.46",
     "father-build-universal": "^1.21.3",
+    "sha1": "^1.1.1",
     "tsc-alias": "^1.4.2",
     "typescript": "^4.5.4"
   },

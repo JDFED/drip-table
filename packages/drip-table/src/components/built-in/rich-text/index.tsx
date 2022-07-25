@@ -9,9 +9,9 @@
 import React from 'react';
 
 import { DripTableColumnSchema, DripTableRecordTypeBase, SchemaObject } from '@/types';
+import { stringify } from '@/utils/operator';
 import ErrorBoundary from '@/components/error-boundary';
 import RichText from '@/components/rich-text';
-import { stringify } from '@/drip-table/utils';
 
 import { DripTableComponentProps } from '../component';
 

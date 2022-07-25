@@ -1,0 +1,795 @@
+/**
+ * This file is part of the drip-table project.
+ * @link     : https://drip-table.jd.com/
+ * @author   : Emil Zhai (root@derzh.com)
+ * @modifier : Emil Zhai (root@derzh.com)
+ * @copyright: Copyright (c) 2021 JD Network Technology Co., Ltd.
+ */
+
+@prefixCls: jfe-drip-table-select;
+
+.@{prefixCls}-auto-complete {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #000000d9;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: "tnum", "tnum";
+}
+
+.@{prefixCls}-auto-complete .@{prefixCls}-clear {
+  right: 13px;
+}
+
+.@{prefixCls}-single .@{prefixCls}-selector {
+  display: flex;
+}
+
+.@{prefixCls}-single .@{prefixCls}-selector .@{prefixCls}-selection-search {
+  position: absolute;
+  top: 0;
+  right: 11px;
+  bottom: 0;
+  left: 11px;
+}
+
+.@{prefixCls}-single .@{prefixCls}-selector .@{prefixCls}-selection-search-input {
+  width: 100%;
+}
+
+.@{prefixCls}-single .@{prefixCls}-selector .@{prefixCls}-selection-item,
+.@{prefixCls}-single .@{prefixCls}-selector .@{prefixCls}-selection-placeholder {
+  padding: 0;
+  line-height: 30px;
+  transition: all .3s;
+}
+
+@supports (-moz-appearance: meterbar) {
+  .@{prefixCls}-single .@{prefixCls}-selector .@{prefixCls}-selection-item,
+  .@{prefixCls}-single .@{prefixCls}-selector .@{prefixCls}-selection-placeholder {
+    line-height: 30px;
+  }
+}
+
+.@{prefixCls}-single .@{prefixCls}-selector .@{prefixCls}-selection-item {
+  position: relative;
+  user-select: none;
+}
+
+.@{prefixCls}-single .@{prefixCls}-selector .@{prefixCls}-selection-placeholder {
+  transition: none;
+  pointer-events: none;
+}
+
+.@{prefixCls}-single .@{prefixCls}-selector .@{prefixCls}-selection-item::after,
+.@{prefixCls}-single .@{prefixCls}-selector .@{prefixCls}-selection-placeholder::after,
+.@{prefixCls}-single .@{prefixCls}-selector::after {
+  display: inline-block;
+  width: 0;
+  visibility: hidden;
+  content: "\a0";
+}
+
+.@{prefixCls}-single.@{prefixCls}-show-arrow .@{prefixCls}-selection-search {
+  right: 25px;
+}
+
+.@{prefixCls}-single.@{prefixCls}-show-arrow .@{prefixCls}-selection-item,
+.@{prefixCls}-single.@{prefixCls}-show-arrow .@{prefixCls}-selection-placeholder {
+  padding-right: 18px;
+}
+
+.@{prefixCls}-single.@{prefixCls}-open .@{prefixCls}-selection-item {
+  color: #bfbfbf;
+}
+
+.@{prefixCls}-single:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector {
+  width: 100%;
+  height: 32px;
+  padding: 0 11px;
+}
+
+.@{prefixCls}-single:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector .@{prefixCls}-selection-search-input {
+  height: 30px;
+}
+
+.@{prefixCls}-single:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector::after {
+  line-height: 30px;
+}
+
+.@{prefixCls}-single.@{prefixCls}-customize-input .@{prefixCls}-selector::after {
+  display: none;
+}
+
+.@{prefixCls}-single.@{prefixCls}-customize-input .@{prefixCls}-selector .@{prefixCls}-selection-search {
+  position: static;
+  width: 100%;
+}
+
+.@{prefixCls}-single.@{prefixCls}-customize-input .@{prefixCls}-selector .@{prefixCls}-selection-placeholder {
+  position: absolute;
+  right: 0;
+  left: 0;
+  padding: 0 11px;
+}
+
+.@{prefixCls}-single.@{prefixCls}-customize-input .@{prefixCls}-selector .@{prefixCls}-selection-placeholder::after {
+  display: none;
+}
+
+.@{prefixCls}-single.@{prefixCls}-lg:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector .@{prefixCls}-selection-item,
+.@{prefixCls}-single.@{prefixCls}-lg:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector .@{prefixCls}-selection-placeholder,
+.@{prefixCls}-single.@{prefixCls}-lg:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector::after {
+  line-height: 38px;
+}
+
+.@{prefixCls}-single.@{prefixCls}-lg:not(.@{prefixCls}-customize-input):not(.@{prefixCls}-customize-input) .@{prefixCls}-selection-search-input {
+  height: 38px;
+}
+
+.@{prefixCls}-single.@{prefixCls}-sm:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector .@{prefixCls}-selection-item,
+.@{prefixCls}-single.@{prefixCls}-sm:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector .@{prefixCls}-selection-placeholder,
+.@{prefixCls}-single.@{prefixCls}-sm:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector::after {
+  line-height: 22px;
+}
+
+.@{prefixCls}-single.@{prefixCls}-sm:not(.@{prefixCls}-customize-input):not(.@{prefixCls}-customize-input) .@{prefixCls}-selection-search-input {
+  height: 22px;
+}
+
+.@{prefixCls}-single.@{prefixCls}-sm:not(.@{prefixCls}-customize-input) .@{prefixCls}-selection-search {
+  right: 7px;
+  left: 7px;
+}
+
+.@{prefixCls}-single.@{prefixCls}-sm:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector {
+  height: 24px;
+  padding: 0 7px;
+}
+
+.@{prefixCls}-single.@{prefixCls}-sm:not(.@{prefixCls}-customize-input).@{prefixCls}-show-arrow .@{prefixCls}-selection-search {
+  right: 28px;
+}
+
+.@{prefixCls}-single.@{prefixCls}-sm:not(.@{prefixCls}-customize-input).@{prefixCls}-show-arrow .@{prefixCls}-selection-item,
+.@{prefixCls}-single.@{prefixCls}-sm:not(.@{prefixCls}-customize-input).@{prefixCls}-show-arrow .@{prefixCls}-selection-placeholder {
+  padding-right: 21px;
+}
+
+.@{prefixCls}-single.@{prefixCls}-lg:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector {
+  height: 40px;
+  padding: 0 11px;
+}
+
+.@{prefixCls}-selection-overflow {
+  position: relative;
+  display: flex;
+  flex: auto;
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.@{prefixCls}-selection-overflow-item {
+  flex: none;
+  align-self: center;
+  max-width: 100%;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selector {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1px 4px;
+}
+
+.@{prefixCls}-show-search.@{prefixCls}-multiple .@{prefixCls}-selector {
+  cursor: text;
+}
+
+.@{prefixCls}-disabled.@{prefixCls}-multiple .@{prefixCls}-selector {
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selector::after {
+  display: inline-block;
+  width: 0;
+  margin: 2px 0;
+  line-height: 24px;
+  content: "\a0";
+}
+
+.@{prefixCls}-multiple.@{prefixCls}-allow-clear .@{prefixCls}-selector,
+.@{prefixCls}-multiple.@{prefixCls}-show-arrow .@{prefixCls}-selector {
+  padding-right: 24px;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-item {
+  position: relative;
+  display: flex;
+  flex: none;
+  box-sizing: border-box;
+  max-width: 100%;
+  height: 24px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  line-height: 22px;
+  background: #f5f5f5;
+  border: 1px solid #f0f0f0;
+  border-radius: 2px;
+  cursor: default;
+  transition: font-size .3s, line-height .3s, height .3s;
+  user-select: none;
+  -webkit-margin-end: 4px;
+  margin-inline-end: 4px;
+  -webkit-padding-start: 8px;
+  padding-inline-start: 8px;
+  -webkit-padding-end: 4px;
+  padding-inline-end: 4px;
+}
+
+.@{prefixCls}-disabled.@{prefixCls}-multiple .@{prefixCls}-selection-item {
+  color: #bfbfbf;
+  border-color: #d9d9d9;
+  cursor: not-allowed;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-item-content {
+  display: inline-block;
+  margin-right: 4px;
+  overflow: hidden;
+  white-space: pre;
+  text-overflow: ellipsis;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-item-remove {
+  font-style: normal;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -.125em;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+  color: #00000073;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: inherit;
+  cursor: pointer;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-item-remove > * {
+  line-height: 1;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-item-remove svg {
+  display: inline-block;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-item-remove::before {
+  display: none;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-item-remove .@{prefixCls}-multiple .@{prefixCls}-selection-item-remove-icon {
+  display: block;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-item-remove > .anticon {
+  vertical-align: -.2em;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-item-remove:hover {
+  color: #000000bf;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-overflow-item + .@{prefixCls}-selection-overflow-item .@{prefixCls}-selection-search {
+  -webkit-margin-start: 0;
+  margin-inline-start: 0;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-search {
+  position: relative;
+  max-width: 100%;
+  -webkit-margin-start: 7px;
+  margin-inline-start: 7px;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-search-input,
+.@{prefixCls}-multiple .@{prefixCls}-selection-search-mirror {
+  height: 24px;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
+  line-height: 24px;
+  transition: all .3s;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-search-input {
+  width: 100%;
+  min-width: 4.1px;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-search-mirror {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  white-space: pre;
+  visibility: hidden;
+}
+
+.@{prefixCls}-multiple .@{prefixCls}-selection-placeholder {
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  left: 11px;
+  transform: translateY(-50%);
+  transition: all .3s;
+}
+
+.@{prefixCls}-multiple.@{prefixCls}-lg .@{prefixCls}-selector::after {
+  line-height: 32px;
+}
+
+.@{prefixCls}-multiple.@{prefixCls}-lg .@{prefixCls}-selection-search {
+  height: 32px;
+  line-height: 32px;
+}
+
+.@{prefixCls}-multiple.@{prefixCls}-lg .@{prefixCls}-selection-search-input,
+.@{prefixCls}-multiple.@{prefixCls}-lg .@{prefixCls}-selection-search-mirror {
+  height: 32px;
+  line-height: 30px;
+}
+
+.@{prefixCls}-multiple.@{prefixCls}-sm .@{prefixCls}-selector::after {
+  line-height: 16px;
+}
+
+.@{prefixCls}-multiple.@{prefixCls}-sm .@{prefixCls}-selection-item {
+  height: 16px;
+  line-height: 14px;
+}
+
+.@{prefixCls}-multiple.@{prefixCls}-sm .@{prefixCls}-selection-search-input,
+.@{prefixCls}-multiple.@{prefixCls}-sm .@{prefixCls}-selection-search-mirror {
+  height: 16px;
+  line-height: 14px;
+}
+
+.@{prefixCls}-multiple.@{prefixCls}-sm .@{prefixCls}-selection-placeholder {
+  left: 7px;
+}
+
+.@{prefixCls}-multiple.@{prefixCls}-sm .@{prefixCls}-selection-search {
+  height: 16px;
+  line-height: 16px;
+  -webkit-margin-start: 3px;
+  margin-inline-start: 3px;
+}
+
+.@{prefixCls}-multiple.@{prefixCls}-lg .@{prefixCls}-selection-item {
+  height: 32px;
+  line-height: 32px;
+}
+
+.@{prefixCls}-disabled .@{prefixCls}-selection-item-remove {
+  display: none;
+}
+
+.@{prefixCls} {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: #000000d9;
+  font-size: 14px;
+  font-variant: tabular-nums;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: "tnum", "tnum";
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.@{prefixCls}:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector {
+  position: relative;
+  background-color: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  transition: all .3s cubic-bezier(.645, .045, .355, 1);
+}
+
+.@{prefixCls}:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector input {
+  cursor: pointer;
+}
+
+.@{prefixCls}-show-search.@{prefixCls}:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector {
+  cursor: text;
+}
+
+.@{prefixCls}-show-search.@{prefixCls}:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector input {
+  cursor: auto;
+}
+
+.@{prefixCls}-focused:not(.@{prefixCls}-disabled).@{prefixCls}:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector {
+  border-color: #40a9ff;
+  box-shadow: 0 0 0 2px #1890ff33;
+  border-right-width: 1px !important;
+  outline: 0;
+}
+
+.@{prefixCls}-disabled.@{prefixCls}:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector {
+  color: #00000040;
+  background: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.@{prefixCls}-multiple.@{prefixCls}-disabled.@{prefixCls}:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector {
+  background: #f5f5f5;
+}
+
+.@{prefixCls}-disabled.@{prefixCls}:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector input {
+  cursor: not-allowed;
+}
+
+.@{prefixCls}:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector .@{prefixCls}-selection-search-input {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  appearance: none;
+}
+
+.@{prefixCls}:not(.@{prefixCls}-customize-input) .@{prefixCls}-selector .@{prefixCls}-selection-search-input::-webkit-search-cancel-button {
+  display: none;
+  appearance: none;
+}
+
+.@{prefixCls}:not(.@{prefixCls}-disabled):hover .@{prefixCls}-selector {
+  border-color: #40a9ff;
+  border-right-width: 1px !important;
+}
+
+.@{prefixCls}-selection-item {
+  flex: 1 1;
+  overflow: hidden;
+  font-weight: 400;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (-ms-high-contrast: none) {
+  .@{prefixCls}-selection-item,
+  .@{prefixCls}-selection-item ::-ms-backdrop {
+    flex: auto;
+  }
+}
+
+.@{prefixCls}-selection-placeholder {
+  flex: 1 1;
+  overflow: hidden;
+  color: #bfbfbf;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+@media (-ms-high-contrast: none) {
+  .@{prefixCls}-selection-placeholder,
+  .@{prefixCls}-selection-placeholder ::-ms-backdrop {
+    flex: auto;
+  }
+}
+
+.@{prefixCls}-arrow {
+  display: inline-block;
+  font-style: normal;
+  text-transform: none;
+  vertical-align: -.125em;
+  text-rendering: optimizelegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  color: #00000040;
+  font-size: 12px;
+  line-height: 1;
+  text-align: center;
+  pointer-events: none;
+}
+
+.@{prefixCls}-arrow > * {
+  line-height: 1;
+}
+
+.@{prefixCls}-arrow svg {
+  display: inline-block;
+}
+
+.@{prefixCls}-arrow::before {
+  display: none;
+}
+
+.@{prefixCls}-arrow .@{prefixCls}-arrow-icon {
+  display: block;
+}
+
+.@{prefixCls}-arrow .anticon {
+  vertical-align: top;
+  transition: transform .3s;
+}
+
+.@{prefixCls}-arrow .anticon > svg {
+  vertical-align: top;
+}
+
+.@{prefixCls}-arrow .anticon:not(.@{prefixCls}-suffix) {
+  pointer-events: auto;
+}
+
+.@{prefixCls}-disabled .@{prefixCls}-arrow {
+  cursor: not-allowed;
+}
+
+.@{prefixCls}-clear {
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  z-index: 1;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  color: #00000040;
+  font-size: 12px;
+  font-style: normal;
+  line-height: 1;
+  text-align: center;
+  text-transform: none;
+  background: #ffffff;
+  cursor: pointer;
+  opacity: 0;
+  transition: color .3s ease, opacity .15s ease;
+  text-rendering: auto;
+}
+
+.@{prefixCls}-clear::before {
+  display: block;
+}
+
+.@{prefixCls}-clear:hover {
+  color: #00000073;
+}
+
+.@{prefixCls}:hover .@{prefixCls}-clear {
+  opacity: 1;
+}
+
+.@{prefixCls}-dropdown {
+  margin: 0;
+  color: #000000d9;
+  line-height: 1.5715;
+  list-style: none;
+  font-feature-settings: "tnum", "tnum",;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  z-index: 1050;
+  box-sizing: border-box;
+  padding: 4px 0;
+  overflow: hidden;
+  font-size: 14px;
+  font-variant: normal;
+  background-color: #ffffff;
+  border-radius: 2px;
+  outline: none;
+  box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px 0 #00000014, 0 9px 28px 8px #0000000d;
+}
+
+.@{prefixCls}-dropdown.ant-slide-up-appear.ant-slide-up-appear-active.@{prefixCls}-dropdown-placement-bottomLeft,
+.@{prefixCls}-dropdown.ant-slide-up-enter.ant-slide-up-enter-active.@{prefixCls}-dropdown-placement-bottomLeft {
+  animation-name: antSlideUpIn;
+}
+
+.@{prefixCls}-dropdown.ant-slide-up-appear.ant-slide-up-appear-active.@{prefixCls}-dropdown-placement-topLeft,
+.@{prefixCls}-dropdown.ant-slide-up-enter.ant-slide-up-enter-active.@{prefixCls}-dropdown-placement-topLeft {
+  animation-name: antSlideDownIn;
+}
+
+.@{prefixCls}-dropdown.ant-slide-up-leave.ant-slide-up-leave-active.@{prefixCls}-dropdown-placement-bottomLeft {
+  animation-name: antSlideUpOut;
+}
+
+.@{prefixCls}-dropdown.ant-slide-up-leave.ant-slide-up-leave-active.@{prefixCls}-dropdown-placement-topLeft {
+  animation-name: antSlideDownOut;
+}
+
+.@{prefixCls}-dropdown-hidden {
+  display: none;
+}
+
+.@{prefixCls}-dropdown-empty {
+  color: #00000040;
+}
+
+.@{prefixCls}-item-empty {
+  position: relative;
+  display: block;
+  min-height: 32px;
+  padding: 5px 12px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #00000040;
+}
+
+.@{prefixCls}-item {
+  position: relative;
+  display: block;
+  min-height: 32px;
+  padding: 5px 12px;
+  color: #000000d9;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  cursor: pointer;
+  transition: background .3s ease;
+}
+
+.@{prefixCls}-item-group {
+  color: #00000073;
+  font-size: 12px;
+  cursor: default;
+}
+
+.@{prefixCls}-item-option {
+  display: flex;
+}
+
+.@{prefixCls}-item-option-content {
+  flex: auto;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.@{prefixCls}-item-option-state {
+  flex: none;
+}
+
+.@{prefixCls}-item-option-active:not(.@{prefixCls}-item-option-disabled) {
+  background-color: #f5f5f5;
+}
+
+.@{prefixCls}-item-option-selected:not(.@{prefixCls}-item-option-disabled) {
+  color: #000000d9;
+  font-weight: 600;
+  background-color: #e6f7ff;
+}
+
+.@{prefixCls}-item-option-selected:not(.@{prefixCls}-item-option-disabled) .@{prefixCls}-item-option-state {
+  color: #1890ff;
+}
+
+.@{prefixCls}-item-option-disabled {
+  color: #00000040;
+  cursor: not-allowed;
+}
+
+.@{prefixCls}-item-option-disabled.@{prefixCls}-item-option-selected {
+  background-color: #f5f5f5;
+}
+
+.@{prefixCls}-item-option-grouped {
+  padding-left: 24px;
+}
+
+.@{prefixCls}-lg {
+  font-size: 16px;
+}
+
+.@{prefixCls}-borderless .@{prefixCls}-selector {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.@{prefixCls}-rtl {
+  direction: rtl;
+}
+
+.@{prefixCls}-rtl .@{prefixCls}-arrow {
+  right: auto;
+  left: 11px;
+}
+
+.@{prefixCls}-rtl .@{prefixCls}-clear {
+  right: auto;
+  left: 11px;
+}
+
+.@{prefixCls}-dropdown-rtl {
+  direction: rtl;
+}
+
+.@{prefixCls}-dropdown-rtl .@{prefixCls}-item-option-grouped {
+  padding-right: 24px;
+  padding-left: 12px;
+}
+
+.@{prefixCls}-rtl.@{prefixCls}-multiple.@{prefixCls}-allow-clear .@{prefixCls}-selector,
+.@{prefixCls}-rtl.@{prefixCls}-multiple.@{prefixCls}-show-arrow .@{prefixCls}-selector {
+  padding-right: 4px;
+  padding-left: 24px;
+}
+
+.@{prefixCls}-rtl.@{prefixCls}-multiple .@{prefixCls}-selection-item {
+  text-align: right;
+}
+
+.@{prefixCls}-rtl.@{prefixCls}-multiple .@{prefixCls}-selection-item-content {
+  margin-right: 0;
+  margin-left: 4px;
+  text-align: right;
+}
+
+.@{prefixCls}-rtl.@{prefixCls}-multiple .@{prefixCls}-selection-search-mirror {
+  right: 0;
+  left: auto;
+}
+
+.@{prefixCls}-rtl.@{prefixCls}-multiple .@{prefixCls}-selection-placeholder {
+  right: 11px;
+  left: auto;
+}
+
+.@{prefixCls}-rtl.@{prefixCls}-multiple.@{prefixCls}-sm .@{prefixCls}-selection-placeholder {
+  right: 7px;
+}
+
+.@{prefixCls}-rtl.@{prefixCls}-single .@{prefixCls}-selector .@{prefixCls}-selection-item,
+.@{prefixCls}-rtl.@{prefixCls}-single .@{prefixCls}-selector .@{prefixCls}-selection-placeholder {
+  right: 0;
+  left: 9px;
+  text-align: right;
+}
+
+.@{prefixCls}-rtl.@{prefixCls}-single.@{prefixCls}-show-arrow .@{prefixCls}-selection-search {
+  right: 11px;
+  left: 25px;
+}
+
+.@{prefixCls}-rtl.@{prefixCls}-single.@{prefixCls}-show-arrow .@{prefixCls}-selection-item,
+.@{prefixCls}-rtl.@{prefixCls}-single.@{prefixCls}-show-arrow .@{prefixCls}-selection-placeholder {
+  padding-right: 0;
+  padding-left: 18px;
+}
+
+.@{prefixCls}-rtl.@{prefixCls}-single.@{prefixCls}-sm:not(.@{prefixCls}-customize-input).@{prefixCls}-show-arrow .@{prefixCls}-selection-search {
+  right: 6px;
+}
+
+.@{prefixCls}-rtl.@{prefixCls}-single.@{prefixCls}-sm:not(.@{prefixCls}-customize-input).@{prefixCls}-show-arrow .@{prefixCls}-selection-item,
+.@{prefixCls}-rtl.@{prefixCls}-single.@{prefixCls}-sm:not(.@{prefixCls}-customize-input).@{prefixCls}-show-arrow .@{prefixCls}-selection-placeholder {
+  padding-right: 0;
+  padding-left: 21px;
+}
